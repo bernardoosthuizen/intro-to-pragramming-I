@@ -102,6 +102,7 @@ function draw()
 		enemies[i].drawEnemies();
 
 		var isContact = enemies[i].checkContact(gameChar_world_x, gameChar_y);
+		
 
 		if(isContact)
 		{
@@ -118,23 +119,27 @@ function draw()
 			{
 				lifeToken[0].used = true;
 				lives -= 1;
-				isLeft = false;
-				isRight = false;
-				push();
-				fill('rgba(0, 0, 0, 0.5)');
-				rect(gameChar_world_x - gameChar_x, 0, width, height);
-				textSize(100);
-				fill(255);
-				textAlign(CENTER);
-				text("GAME OVER",(gameChar_world_x - gameChar_x) + width/2, height/2);
-				// text("GAME OVER",(gameChar_world_x - gameChar_x + width)/2 ,height/2);
-				textSize(20);
-				text("Press space to continue....",(gameChar_world_x - gameChar_x) + width/2 ,height/2 + ((height/2)/5));
-				pop();
-			
 			}	
 		}
 
+	}
+
+	// If no more life tokens exist 'game over screen appears'
+	if (lifeToken[0].used === true) 
+	{
+		isLeft = false;
+		isRight = false;
+		push();
+		fill('rgba(0, 0, 0, 0.5)');
+		rect(gameChar_world_x - gameChar_x, 0, width, height);
+		textSize(100);
+		fill(255);
+		textAlign(CENTER);
+		text("GAME OVER",(gameChar_world_x - gameChar_x) + width/2, height/2);
+		// text("GAME OVER",(gameChar_world_x - gameChar_x + width)/2 ,height/2);
+		textSize(20);
+		text("Press space to continue....",(gameChar_world_x - gameChar_x) + width/2 ,height/2 + ((height/2)/5));
+		pop();
 	}
 
 	// Draw collectable items.
@@ -229,8 +234,8 @@ function draw()
 	
 	}
 	
-	// Check if if a player dies
-	checkPlayerDie();
+	// Check if if a player falls in a canyon
+	checkPlayerFall();
 
 	// Update real position of gameChar for collision detection.
 	gameChar_world_x = gameChar_x - scrollPos;
@@ -660,10 +665,10 @@ function checkFlagpole()
 }
 
 // ----------------------------------
-// Check when player dies
+// Check when player falls down a canyon
 // ----------------------------------
 
-function checkPlayerDie()
+function checkPlayerFall()
 {
 	if(gameChar_y > 600)
 	{
@@ -671,24 +676,12 @@ function checkPlayerDie()
 		{
 			lifeToken[lives - 1].used = true;
 			lives -= 1;
-			console.log(gameChar_x)
 			startGame();
 		}
 		else
 		{
 			lifeToken[0].used = true;
 			lives -= 1;
-			push();
-			fill('rgba(0, 0, 0, 0.5)');
-			rect(0, 0, width, height);
-			textSize(100);
-			fill(255);
-			textAlign(CENTER);
-			text("GAME OVER",width/2,height/2);
-			textSize(20);
-			text("Press space to continue....",width/2,height/2 + ((height/2)/5));
-			pop();
-			//  jumpSound.setVolume(0);
 		}
  	}
 }
@@ -819,7 +812,7 @@ function startGame()
 
 	enemies = [];
 
-	for(i = 0; i < 5; i++)
+	for(i = 0; i < 4; i++)
 	{
 		enemies.push(new Enemy(random(-2000,2000), random(10,40), random(1,5), random(50,100)))
 	};
