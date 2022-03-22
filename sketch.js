@@ -110,6 +110,7 @@ function draw()
 			{
 				lifeToken[lives - 1].used = true;
 				lives -= 1;
+				console.log(gameChar_world_x)
 				startGame();
 				break;
 			}
@@ -121,13 +122,14 @@ function draw()
 				isRight = false;
 				push();
 				fill('rgba(0, 0, 0, 0.5)');
-				rect(0, 0, width, height);
+				rect(gameChar_world_x - gameChar_x, 0, width, height);
 				textSize(100);
 				fill(255);
 				textAlign(CENTER);
-				text("GAME OVER",width/2,height/2);
+				text("GAME OVER",(gameChar_world_x - gameChar_x) + width/2, height/2);
+				// text("GAME OVER",(gameChar_world_x - gameChar_x + width)/2 ,height/2);
 				textSize(20);
-				text("Press space to continue....",width/2,height/2 + ((height/2)/5));
+				text("Press space to continue....",(gameChar_world_x - gameChar_x) + width/2 ,height/2 + ((height/2)/5));
 				pop();
 			
 			}	
@@ -669,6 +671,7 @@ function checkPlayerDie()
 		{
 			lifeToken[lives - 1].used = true;
 			lives -= 1;
+			console.log(gameChar_x)
 			startGame();
 		}
 		else
@@ -689,6 +692,7 @@ function checkPlayerDie()
 		}
  	}
 }
+
 
 // ----------------------------------
 // Draw life counter
